@@ -48,7 +48,7 @@ namespace WebcamDemo
             {
                 OnnxModel = SharedConfig.GetTestModelV11(ModelType.ObjectDetection),
                 ModelType = ModelType.ObjectDetection,
-                Cuda = true,
+                Cuda = false,
                 PrimeGpu = false
             });
 

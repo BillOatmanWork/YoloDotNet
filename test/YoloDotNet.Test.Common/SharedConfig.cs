@@ -81,6 +81,8 @@
             ImageType.People => Path.Combine(BASE_MEDIA, "people.jpg"),
             ImageType.Crosswalk => Path.Combine(BASE_MEDIA, "crosswalk.jpg"),
             ImageType.Island => Path.Combine(BASE_MEDIA, "island.jpg"),
+            ImageType.Basketball => Path.Combine(BASE_MEDIA, "basketball.jpg"),
+            ImageType.BaseballBasketball => Path.Combine(BASE_MEDIA, "baseball-basketball.jpg"),
             _ => throw new ArgumentException("Unknown modeltype.")
         };
 

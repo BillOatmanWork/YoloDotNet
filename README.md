@@ -117,7 +117,7 @@ using System.Threading.Tasks;
 using var yolo = new Yolo(new YoloOptions()
 {
     OnnxModel = @"path\to\model.onnx",
-    Cuda = true,
+    Cuda = false,
     PrimeGpu = true,
     ModelType = ModelType.ObjectDetection
 });

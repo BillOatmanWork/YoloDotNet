@@ -38,7 +38,7 @@
             options.OnnxModel = _modelV8;
             _cpuYolov8 = new Yolo(options);
 
-            options.Cuda = true;
+            options.Cuda = false;
             _gpuYolov8 = new Yolo(options);
 
             // Yolov9
@@ -47,7 +47,7 @@
 
             _cpuYolov9 = new Yolo(options);
 
-            options.Cuda = true;
+            options.Cuda = false;
             _gpuYolov9 = new Yolo(options);
 
             // Yolov10
@@ -56,7 +56,7 @@
 
             _cpuYolov10 = new Yolo(options);
 
-            options.Cuda = true;
+            options.Cuda = false;
             _gpuYolov10 = new Yolo(options);
 
             // Yolov11
@@ -65,7 +65,7 @@
 
             _cpuYolov11 = new Yolo(options);
 
-            options.Cuda = true;
+            options.Cuda = false;
             _gpuYolov11 = new Yolo(options);
         }
 

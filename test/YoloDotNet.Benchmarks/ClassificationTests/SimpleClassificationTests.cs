@@ -37,7 +37,7 @@
             options.Cuda = false;
             _cpuYolov8 = new Yolo(options);
 
-            options.Cuda = true;
+            options.Cuda = false;
             _gpuYolov8 = new Yolo(options);
 
             // Yolov11
@@ -46,7 +46,7 @@
             options.Cuda = false;
             _cpuYolov11 = new Yolo(options);
 
-            options.Cuda = true;
+            options.Cuda = false;
             _gpuYolov11 = new Yolo(options);
         }
 

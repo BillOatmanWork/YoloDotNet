@@ -17,13 +17,23 @@ Console.CursorVisible = false;
 CreateOutputFolder();
 
 Action<ModelType, ModelVersion, ImageType, bool, bool> runDemoAction = RunDemo;
-runDemoAction(ModelType.Classification, ModelVersion.V8, ImageType.Hummingbird, false, false);
-runDemoAction(ModelType.Classification, ModelVersion.V11, ImageType.Hummingbird, false, false);
+//runDemoAction(ModelType.Classification, ModelVersion.V8, ImageType.Hummingbird, false, false);
+//runDemoAction(ModelType.Classification, ModelVersion.V11, ImageType.Hummingbird, false, false);
 
-runDemoAction(ModelType.ObjectDetection, ModelVersion.V8, ImageType.Street, false, false);
-runDemoAction(ModelType.ObjectDetection, ModelVersion.V9, ImageType.Street, false, false);
-runDemoAction(ModelType.ObjectDetection, ModelVersion.V10, ImageType.Street, false, false);
-runDemoAction(ModelType.ObjectDetection, ModelVersion.V11, ImageType.Street, false, false);
+//runDemoAction(ModelType.ObjectDetection, ModelVersion.V8, ImageType.Street, false, false);
+//runDemoAction(ModelType.ObjectDetection, ModelVersion.V9, ImageType.Street, false, false);
+//runDemoAction(ModelType.ObjectDetection, ModelVersion.V10, ImageType.Street, false, false);
+//runDemoAction(ModelType.ObjectDetection, ModelVersion.V11, ImageType.Street, false, false);
+
+//runDemoAction(ModelType.ObjectDetection, ModelVersion.V8, ImageType.Basketball, false, false);
+//runDemoAction(ModelType.ObjectDetection, ModelVersion.V9, ImageType.Basketball, false, false);
+//runDemoAction(ModelType.ObjectDetection, ModelVersion.V10, ImageType.Basketball, false, false);
+//runDemoAction(ModelType.ObjectDetection, ModelVersion.V11, ImageType.Basketball, false, false);
+
+runDemoAction(ModelType.ObjectDetection, ModelVersion.V8, ImageType.BaseballBasketball, false, false);
+runDemoAction(ModelType.ObjectDetection, ModelVersion.V9, ImageType.BaseballBasketball, false, false);
+runDemoAction(ModelType.ObjectDetection, ModelVersion.V10, ImageType.BaseballBasketball, false, false);
+runDemoAction(ModelType.ObjectDetection, ModelVersion.V11, ImageType.BaseballBasketball, false, false);
 
 runDemoAction(ModelType.ObbDetection, ModelVersion.V8, ImageType.Island, false, false);
 runDemoAction(ModelType.ObbDetection, ModelVersion.V11, ImageType.Island, false, false);
@@ -91,11 +101,32 @@ static void RunDemo(ModelType modelType, ModelVersion modelVersion, ImageType im
             }
         case ModelType.ObjectDetection:
             {
-                var result = yolo.RunObjectDetection(image, 0.23, 0.7);
-                labels = result.Select(x => x.Label).ToList();
-                resultImage = image.Draw(result);
+                List<ObjectDetection> adjustedResult = new();
+                List<ObjectDetection> result = yolo.RunObjectDetection(image, 0.23, 0.7);
+                foreach (ObjectDetection detection in result)
+                {
+                    if (detection.Label.Name == "sports ball")
+                    {
+                        var newLabel = detection.Label with { Name = "ball" };
+                        var newEntry = new ObjectDetection
+                        {
+                            Label = newLabel,
+                            Confidence = detection.Confidence,
+                            BoundingBox = detection.BoundingBox
+                        };
+                        adjustedResult.Add(newEntry);
+                    }
+                    else
+                    {
+                        adjustedResult.Add(detection);
+                    }
+                }
+
+                labels = adjustedResult.Select(x => x.Label).ToList();
+                resultImage = image.Draw(adjustedResult);
                 break;
             }
+            
         case ModelType.ObbDetection:
             {
                 var result = yolo.RunObbDetection(image, 0.23, 0.7);
@@ -151,7 +182,7 @@ static void ObjectDetectionOnVideo()
     {
         OnnxModel = SharedConfig.GetTestModelV8(ModelType.ObjectDetection),
         ModelType = ModelType.ObjectDetection,
-        Cuda = true
+        Cuda = false
     });
 
     int currentLineCursor = 0;
@@ -210,6 +241,7 @@ static void DisplayOnnxMetaDataExample()
     using var yolo = new Yolo(new YoloOptions
     {
         OnnxModel = SharedConfig.GetTestModelV8(ModelType.ObjectDetection),
+        Cuda = false,
         ModelType = ModelType.ObjectDetection
     });
 

@@ -6,6 +6,8 @@
         Street,
         People,
         Crosswalk,
-        Island
+        Island,
+        Basketball,
+        BaseballBasketball
     }
 }

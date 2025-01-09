@@ -30,7 +30,7 @@
 
             _cpuYolo = new Yolo(options);
 
-            options.Cuda = true;
+            options.Cuda = false;
             _cudaYolo = new Yolo(options);
 
             _originalSizeimage = SKImage.FromEncodedData(_originalSizeimagePath);
